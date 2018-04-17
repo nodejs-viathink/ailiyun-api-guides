@@ -127,3 +127,5 @@ crashlytics-build.properties
 fabric.properties
 */.idea/
 */target/
+*.iml
+*/logs/
