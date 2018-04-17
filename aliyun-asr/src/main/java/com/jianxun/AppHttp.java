@@ -1,6 +1,7 @@
 package com.jianxun;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jianxun.http.HttpResponse;
 import com.jianxun.http.HttpUtil;
 import org.slf4j.Logger;
@@ -21,9 +22,11 @@ public class AppHttp {
         String model = "chat";
         url = url+"model="+model;
         //读取本地的语音文件
-        Path path = FileSystems.getDefault().getPath("src/main/resources/sample.pcm");
+        Path path = FileSystems.getDefault().getPath("src/main/resources/test.pcm");
         byte[] data = Files.readAllBytes(path);
         HttpResponse response = HttpUtil.sendAsrPost(data,"pcm",16000,url,ak_id,ak_secret);
         logger.info(JSON.toJSONString(response));
+        JSONObject jsonObject= JSON.parseObject(response.getResult());
+        logger.info(jsonObject.getString("result"));
     }
 }
