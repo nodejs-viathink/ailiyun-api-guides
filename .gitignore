@@ -129,3 +129,4 @@ fabric.properties
 */target/
 *.iml
 */logs/
+audio-transcode/src/main/resources/*.pcm
