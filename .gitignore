@@ -130,3 +130,6 @@ fabric.properties
 *.iml
 */logs/
 audio-transcode/src/main/resources/*.pcm
+*/mvnw
+*/mvnw.cmd
+*/.mvn/
