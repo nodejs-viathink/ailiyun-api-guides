@@ -54,35 +54,35 @@ public class CriteriaTests {
 
     @Test
     public void compare(){
-        //db.userUser.find({age:{$lt:10}})
+        //db.user1.find({age:{$lt:10}})
         Query query = new Query(Criteria.where("age").lt(10));
         List<User> list = mongoTemplate.find(query,User.class,"user1");
         System.out.println("=================age lt 10 ==================");
         for (User user : list) {
             System.out.println(user);
         }
-        //db.userUser.find({age:{$lte:10}})
+        //db.user1.find({age:{$lte:10}})
         query = new Query(Criteria.where("age").lte(10));
         list = mongoTemplate.find(query,User.class,"user1");
         System.out.println("=================age lte 10 ==================");
         for (User user : list) {
             System.out.println(user);
         }
-        //db.userUser.find({age:{$gt:10}})
+        //db.user1.find({age:{$gt:10}})
         query = new Query(Criteria.where("age").gt(10));
         list = mongoTemplate.find(query,User.class,"user1");
         System.out.println("=================age gt 10 ==================");
         for (User user : list) {
             System.out.println(user);
         }
-        //db.userUser.find({age:{$gte:10}})
+        //db.user1.find({age:{$gte:10}})
         query = new Query(Criteria.where("age").gte(10));
         list = mongoTemplate.find(query,User.class,"user1");
         System.out.println("=================age gte 10 ==================");
         for (User user : list) {
             System.out.println(user);
         }
-        //db.userUser.find({age:{$gte:10,$lt:18}})
+        //db.user1.find({age:{$gte:10,$lt:18}})
         query = new Query(Criteria.where("age").gte(10).lt(18));
         list = mongoTemplate.find(query,User.class,"user1");
         System.out.println("================= 10 <= age < 18 ==================");
@@ -92,7 +92,7 @@ public class CriteriaTests {
     }
     @Test
     public void sort(){
-        //db.userUser.find({age:{lt:10}}).sort(age:-1)
+        //db.user1.find({age:{lt:10}}).sort(age:-1)
         Query query = new Query(Criteria.where("age").lt(10)).with(new Sort(Sort.Direction.DESC,"age"));
         List<User> list = mongoTemplate.find(query,User.class,"user1");
         for (User user : list) {
@@ -101,7 +101,7 @@ public class CriteriaTests {
     }
     @Test
     public void page(){
-        //db.userUser.find({age:{lt:10}}).skip(5*(1-1)).limit(5)
+        //db.user1.find({age:{lt:10}}).skip(5*(1-1)).limit(5)
         Query query = new Query(Criteria.where("age").lt(10)).with(PageRequest.of(1,5));
         List<User> list = mongoTemplate.find(query,User.class,"user1");
         for (User user : list) {
