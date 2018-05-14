@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--指明该映射文件对应的 Mapper 类文件地址：-->
+<mapper namespace="com.example.mybatis.mapper.UserMapper">
+    <!--配置表结构和类的对应关系：-->
+    <resultMap id="BaseResultMap" type="com.example.mybatis.entity.UserEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="passWord" property="passWord" jdbcType="VARCHAR" />
+        <result column="user_sex" property="userSex" javaType="com.example.mybatis.enums.UserSexEnum"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--写具体的 SQL 语句-->
+    <select id="getAlls" resultMap="BaseResultMap"  >
+       SELECT
+       *
+       FROM users
+    </select>
+
+    <!--复用 XML，公用的一些 XML 片段可以提取出来，在其他 SQL 中去引用-->
+
+    <sql id="Base_Column_List" >
+        id, userName, passWord, user_sex, nick_name
+    </sql>
+    <sql id="Base_Where_List">
+        <if test="userName != null  and userName != ''">
+            and userName = #{userName}
+        </if>
+        <if test="userSex != null and userSex != ''">
+            and user_sex = #{userSex}
+        </if>
+    </sql>
+
+    <select id="getAll" resultMap="BaseResultMap"  >
+        SELECT
+          <include refid="Base_Column_List" />
+        FROM
+          users
+    </select>
+    <insert id="insert" parameterType="com.example.mybatis.entity.UserEntity">
+        INSERT INTO users
+        (userName, passWord, user_sex)
+        values
+        (#{userName}, #{passWord}, #{userSex})
+    </insert>
+    <!--常用的增删改查-->
+    <insert id="addUser" parameterType="com.example.mybatis.entity.UserEntity">
+        INSERT INTO
+          users
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userName != null" >
+                userName,
+            </if>
+            <if test="passWord != null" >
+                passWord,
+            </if>
+            <if test="userSex != null" >
+                user_sex,
+            </if>
+            <if test="nickName != null" >
+                nick_name
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userName != null" >
+                #{userName},
+            </if>
+            <if test="passWord != null" >
+                #{passWord},
+            </if>
+            <if test="userSex != null" >
+                #{userSex},
+            </if>
+            <if test="nickName != null" >
+                #{nickName}
+            </if>
+
+        </trim>
+    </insert>
+
+    <delete id="deleteUser" parameterType="Long">
+        DELETE FROM
+            users
+        WHERE
+            id=#{id}
+    </delete>
+
+    <update id="updateUser" parameterType="com.example.mybatis.entity.UserEntity">
+        UPDATE
+            users
+        SET
+            <if test="userName != null">userName = #{userName},</if>
+            <if test="passWord != null">passWord = #{passWord},</if>
+            <if test="userSex != null">user_sex = #{userSex},</if>
+            nick_name = #{nickName}
+        WHERE
+            id =#{id}
+    </update>
+
+    <select id="getOne" parameterType="Long" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            users
+        WHERE
+            id=#{id}
+    </select>
+    <!--分页-->
+    <select id="getList" parameterType="com.example.mybatis.param.UserParam" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            users
+        WHERE 1=1
+            <include refid="Base_Where_List" />
+        ORDER BY id ASC
+        limit #{beginLine}, #{pageSize}
+    </select>
+    <select id="getCount" parameterType="com.example.mybatis.param.UserParam" resultType="Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            users
+        WHERE 1=1
+            <include refid="Base_Where_List" />
+    </select>
+    <!--pageHelper分页插件分页-->
+    <select id="findByPage" parameterType="com.example.mybatis.param.UserParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from users
+        WHERE 1=1
+        <include refid="Base_Where_List" />
+        ORDER BY id DESC
+    </select>
+</mapper>

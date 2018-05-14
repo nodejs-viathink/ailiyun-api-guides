@@ -1,0 +1,19 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="Integer" type="java.lang.Integer" />
+        <typeAlias alias="Long" type="java.lang.Long" />
+        <typeAlias alias="HashMap" type="java.util.HashMap" />
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+        <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="LinkedList" type="java.util.LinkedList" />
+    </typeAliases>
+</configuration>
+
+<!--主要配置常用的 typeAliases，设置类型别名为 Java 类型设置一个短的名字-->
+<!--这样在使用 Mapper.xml 的时候，需要引入可以直接这样写：-->
+<!--resultType="Integer"-->
+<!--//或者-->
+<!--parameterType="Long"-->
